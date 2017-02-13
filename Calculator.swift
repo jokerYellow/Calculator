@@ -28,8 +28,14 @@ extension String{
     }
 }
 
-/// 计算数学表达式类
+/// 解析数学表达式类
 class Calculator: NSObject {
+    
+    /// 弹出栈
+    ///
+    /// - Parameters:
+    ///   - op: 操作符栈
+    ///   - np: 操作值栈
     class func popStack(op:inout Array<String>,np:inout Array<Float>){
         let lastOp = op.popLast()!
         let p1 = np.popLast()!
@@ -50,6 +56,10 @@ class Calculator: NSObject {
         np.append(p3)
     }
     
+    /// 解析数组，将数组解析成运算符栈和操作符栈
+    ///
+    /// - Parameter arr:
+    /// - Returns:
     class func calculateArr(arr:Array<String>)->Array<Float>{
         var op = Array<String>()
         var np = Array<Float>()
@@ -73,6 +83,10 @@ class Calculator: NSObject {
         return np
     }
     
+    /// 计算数学表达式的值
+    ///
+    /// - Parameter str: 数学表达式
+    /// - Returns: 返回值
     class func calculate(str:String)->Float{
         var begin = 0
         var end = 0
@@ -111,6 +125,10 @@ class Calculator: NSObject {
         return Calculator.calculateArr(arr: arr)[0]
     }
     
+    /// 将字符串转换成数组
+    ///
+    /// - Parameter str: 字符串
+    /// - Returns: 数组
     class func anynalyze(str:String) -> (Array<String>) {
         var items = [String]()
         var current = String()
