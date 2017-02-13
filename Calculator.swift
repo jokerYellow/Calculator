@@ -83,6 +83,7 @@ class Calculator: NSObject {
                 strCalculate = "0" + strCalculate
             }
         }
+        var subArr = [(String,Int,Int)]()
         for i in 0..<strCalculate.characters.count {
             let x = String.init(strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: i)])
             if x == "("{
@@ -94,20 +95,24 @@ class Calculator: NSObject {
                 count -= 1
                 if count == 0 {
                     end = i
+                    let subString = strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: begin+1)..<strCalculate.index(strCalculate.startIndex, offsetBy: end)]
+                    let subValue = Calculator.calculate(str:subString)
+                    subArr.append((String(subValue),begin,end))
+                    begin = 0
+                    end = 0
                 }
             }
         }
-        
-        if end > 0 {
-            let subValue = Calculator.calculate(str: strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: begin+1)..<strCalculate.index(strCalculate.startIndex, offsetBy: end)])
-            strCalculate = strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: 0)..<strCalculate.index(strCalculate.startIndex, offsetBy: begin)] + String(subValue) + strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: end+1)..<strCalculate.index(strCalculate.startIndex, offsetBy: strCalculate.characters.count)]
-        }
+        for (subValue,beginOffset,endOffset) in subArr.reversed() {
+            let range = Range<String.Index>.init(uncheckedBounds: (strCalculate.index(strCalculate.startIndex, offsetBy: beginOffset),strCalculate.index(strCalculate.startIndex, offsetBy: endOffset+1)))
+            strCalculate.replaceSubrange(range, with: subValue)
+        } 
         let arr = Calculator.anynalyze(str: strCalculate)
         return Calculator.calculateArr(arr: arr)[0]
     }
     
     class func anynalyze(str:String) -> (Array<String>) {
-        var number = [String]()
+        var items = [String]()
         var current = String()
         var strTer = str
         if str[str.index(str.startIndex, offsetBy: 0)..<str.index(str.startIndex, offsetBy: 1)] == "-" {
@@ -117,18 +122,18 @@ class Calculator: NSObject {
             if character.cal_isOP {
                 if let cN = String.init(current) {
                     if !cN.isEmpty {
-                        number.append(cN)
+                        items.append(cN)
                         current = String()
                     }
                 }
-                number.append(String.init(character))
+                items.append(String.init(character))
             }else{
                 current.append(character)
             }
         }
         if !current.isEmpty {
-            number.append(String.init(current)!)
+            items.append(String.init(current)!)
         }
-        return number
+        return items
     }
 }
