@@ -4,7 +4,7 @@
     let result = Calculator.calculate(str: "-2*9/(2+10)+22*2-13+11.9*(1+2*(2+2/1))*100+222")
     //10961.5
 # About me
-Click Me[http://jokeryellow.github.io]
+[Click Me](http://jokeryellow.github.io)
 
 # License
 
@@ -29,3 +29,4 @@ Click Me[http://jokeryellow.github.io]
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
+
