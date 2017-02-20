@@ -29,10 +29,10 @@ extension String{
 }
 /*
     let m = Calculate(str: "-2*9/(2+10)+22*2-13+11.9*(1+2*(2+2/1))*100+222")
-    if let error = m.0 {
+    if let error = m.error {
         print(error.domain)
     }
-    if let result = m.1 {
+    if let result = m.result {
         print(result)//10961.5
     }
 */
