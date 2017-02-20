@@ -28,6 +28,13 @@ extension String{
     }
 }
 
+public func Calculate(str:String) -> (NSError?,Float?) {
+    if let error = Calculator.checkAvailable(str: str) {
+        return (error,nil)
+    }
+    return (nil,Calculator.calculate(str: str))
+}
+
 /// 解析数学表达式类
 class Calculator: NSObject {
     
@@ -83,6 +90,38 @@ class Calculator: NSObject {
         return np
     }
     
+    class func checkAvailable(str:String)->NSError?{
+        if str.contains("()") {
+            return NSError.init(domain: "空括号", code: -1, userInfo: nil)
+        }
+        var leftNumber = 0
+        var rightNumber = 0
+        var strCalculate = str
+        if let m = str.characters.first {
+            if String.init(m) == "-" {
+                strCalculate = "0" + strCalculate
+            }
+        }
+        var current = String()
+        for i in 0..<strCalculate.characters.count {
+            let x = String.init(strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: i)])
+            if !"1234567890.+-*/()".contains(x)  {
+                return NSError.init(domain: "非法字符"+x, code: -1, userInfo: nil)
+            }
+            if x == "("{
+                leftNumber += 1
+            }else if x == ")"{
+                rightNumber += 1
+            }else if current.cal_priority > 0 && x.cal_priority > 0 {
+                return NSError.init(domain: "连续操作符"+x+current, code: -1, userInfo: nil)
+            }
+            current = x
+        }
+        if leftNumber != rightNumber {
+            return NSError.init(domain: "括号不匹配", code: -1, userInfo: nil)
+        }
+        return nil
+    }
     /// 计算数学表达式的值
     ///
     /// - Parameter str: 数学表达式
@@ -110,8 +149,10 @@ class Calculator: NSObject {
                 if count == 0 {
                     end = i
                     let subString = strCalculate[strCalculate.index(strCalculate.startIndex, offsetBy: begin+1)..<strCalculate.index(strCalculate.startIndex, offsetBy: end)]
-                    let subValue = Calculator.calculate(str:subString)
-                    subArr.append((String(subValue),begin,end))
+                    if subString.lengthOfBytes(using: String.Encoding.utf8) > 0 {
+                        let subValue = Calculator.calculate(str:subString)
+                        subArr.append((String(subValue),begin,end))
+                    }
                     begin = 0
                     end = 0
                 }
