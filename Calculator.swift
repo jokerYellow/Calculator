@@ -27,8 +27,20 @@ extension String{
         }
     }
 }
-
-public func Calculate(str:String) -> (NSError?,Float?) {
+/*
+    let m = Calculate(str: "-2*9/(2+10)+22*2-13+11.9*(1+2*(2+2/1))*100+222")
+    if let error = m.0 {
+        print(error.domain)
+    }
+    if let result = m.1 {
+        print(result)//10961.5
+    }
+*/
+/// 解析表达式方法
+///
+/// - Parameter str: 字符串
+/// - Returns: 元组数据
+public func Calculate(str:String) -> (error:NSError?,result:Float?) {
     if let error = Calculator.checkAvailable(str: str) {
         return (error,nil)
     }
