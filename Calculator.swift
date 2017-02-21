@@ -7,6 +7,26 @@
 //
 
 import UIKit
+/*
+    let m = Calculate(str: "-2*9/(2+10)+22*2-13+11.9*(1+2*(2+2/1))*100+222")
+    if let error = m.error {
+        print(error.domain)
+    }
+    if let result = m.result {
+        print(result)//10961.5
+    }
+*/
+/// 解析表达式方法
+///
+/// - Parameter str: 字符串
+/// - Returns: 元组数据
+public func Calculate(str:String) -> (error:NSError?,result:Float?) {
+    if let error = Calculator.checkAvailable(str: str) {
+        return (error,nil)
+    }
+    return (nil,Calculator.calculate(str: str))
+}
+
 
 extension Character{
     var cal_isOP:Bool{
@@ -26,25 +46,6 @@ extension String{
             return 0
         }
     }
-}
-/*
-    let m = Calculate(str: "-2*9/(2+10)+22*2-13+11.9*(1+2*(2+2/1))*100+222")
-    if let error = m.error {
-        print(error.domain)
-    }
-    if let result = m.result {
-        print(result)//10961.5
-    }
-*/
-/// 解析表达式方法
-///
-/// - Parameter str: 字符串
-/// - Returns: 元组数据
-public func Calculate(str:String) -> (error:NSError?,result:Float?) {
-    if let error = Calculator.checkAvailable(str: str) {
-        return (error,nil)
-    }
-    return (nil,Calculator.calculate(str: str))
 }
 
 /// 解析数学表达式类
@@ -134,7 +135,7 @@ class Calculator: NSObject {
         }
         return nil
     }
-    /// 计算数学表达式的值
+    /// 计算数学表达式的值，此字符串要确保正确
     ///
     /// - Parameter str: 数学表达式
     /// - Returns: 返回值
