@@ -21,10 +21,11 @@ import UIKit
 /// - Parameter str: 字符串
 /// - Returns: 元组数据
 public func Calculate(str:String) -> (error:NSError?,result:Float?) {
-    if let error = Calculator.checkAvailable(str: str) {
+    let strCalculate = str.replacingOccurrences(of: " ", with: "")
+    if let error = Calculator.checkAvailable(str: strCalculate) {
         return (error,nil)
     }
-    return (nil,Calculator.calculate(str: str))
+    return (nil,Calculator.calculate(str: strCalculate))
 }
 
 
