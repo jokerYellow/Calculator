@@ -1,0 +1,10 @@
+framework module CalculatorPP {
+  umbrella header "CalculatorPP-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module CalculatorPP.__Swift {
+    exclude header "CalculatorPP-Swift.h"
+}

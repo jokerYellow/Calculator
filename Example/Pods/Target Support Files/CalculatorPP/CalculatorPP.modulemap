@@ -1,0 +1,6 @@
+framework module CalculatorPP {
+  umbrella header "CalculatorPP-umbrella.h"
+
+  export *
+  module * { export * }
+}

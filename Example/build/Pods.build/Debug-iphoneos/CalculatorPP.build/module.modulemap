@@ -1,0 +1,11 @@
+framework module CalculatorPP {
+  umbrella header "CalculatorPP-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module CalculatorPP.Swift {
+    header "CalculatorPP-Swift.h"
+    requires objc
+}
